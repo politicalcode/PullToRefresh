@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
-public class LoadingLayoutProxy implements ILoadingLayout {
+class LoadingLayoutProxy implements ILoadingLayout {
 
     private final HashSet<LoadingLayout> mLoadingLayouts;
 
