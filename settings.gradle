@@ -1,1 +1,1 @@
-include ':library', ':app', ':pulltorefreshlistfragment', ':pulltorefreshviewpager'
+include ':library', ':app', ':pulltorefreshlistfragment', ':pulltorefreshviewpager', ':uml'
