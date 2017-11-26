@@ -22,6 +22,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +44,7 @@ import com.handmark.pulltorefresh.library.internal.ViewCompat;
 /**
  * @author Chris Banes.
  */
+@RequiresApi(api = VERSION_CODES.JELLY_BEAN)
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout implements IPullToRefresh<T> {
 
     // ===========================================================
@@ -81,7 +83,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     private Mode mMode = Mode.getDefault();
 
     private Mode mCurrentMode;
-    T mRefreshableView;
+    protected T mRefreshableView;
     private FrameLayout mRefreshableViewWrapper;
 
     private boolean mShowViewWhileRefreshing = true;
@@ -543,6 +545,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     }
 
     /**
+     * get PullToRefreshScroll Direction.
+     *
      * @return Either {@link Orientation#VERTICAL} or
      * {@link Orientation#HORIZONTAL} depending on the scroll direction.
      */
@@ -1090,6 +1094,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         }
     }
 
+    @RequiresApi(api = VERSION_CODES.JELLY_BEAN)
     @SuppressWarnings("deprecation")
     private void init(Context context, AttributeSet attrs) {
         switch (getPullToRefreshScrollDirection()) {
@@ -1306,7 +1311,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         });
     }
 
-    public static enum AnimationStyle {
+    public enum AnimationStyle {
         /**
          * This is the default for Android-PullToRefresh. Allows you to use any
          * drawable, which is automatically rotated and used as a Progress Bar.
@@ -1352,7 +1357,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         }
     }
 
-    public static enum Mode {
+    public enum Mode {
 
         /**
          * Disable all Pull-to-Refresh gesture and Refreshing handling
@@ -1420,7 +1425,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 
         private int mIntValue;
 
-        // The modeInt values need to match those from attrs.xml
+        /**
+         * The modeInt values need to match those from attrs.xml
+         */
         Mode(int modeInt) {
             mIntValue = modeInt;
         }
@@ -1508,6 +1515,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         /**
          * onRefresh will be called for both a Pull from start, and Pull from
          * end
+         *
+         * @param refreshView
          */
         void onRefresh(final PullToRefreshBase<V> refreshView);
 
@@ -1526,12 +1535,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         /**
          * onPullDownToRefresh will be called only when the user has Pulled from
          * the start, and released.
+         *
+         * @param refreshView
          */
         void onPullDownToRefresh(final PullToRefreshBase<V> refreshView);
 
         /**
          * onPullUpToRefresh will be called only when the user has Pulled from
          * the end, and released.
+         *
+         * @param refreshView
          */
         void onPullUpToRefresh(final PullToRefreshBase<V> refreshView);
 
@@ -1667,6 +1680,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     }
 
     interface OnSmoothScrollFinishedListener {
+        /**
+         * 在光滑的卷轴上完成
+         */
         void onSmoothScrollFinished();
     }
 
